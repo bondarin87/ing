@@ -1,225 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sergei Bondar – Digital Card</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tarjeta de Sergei Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      background-color: #000;
-      font-family: 'Share Tech Mono', monospace;
-      color: #fff;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Orbitron', sans-serif;
       overflow: hidden;
     }
 
-    .loader {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    .terminal {
-      width: 90%;
-      max-width: 800px;
-      background-color: #000;
-      border: 2px solid #00ffcc;
-      padding: 20px;
-      font-size: 16px;
-      line-height: 1.4;
-      color: #00ffcc;
-      box-shadow: 0 0 10px #00ffcc;
-    }
-
-    .terminal span {
-      display: block;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      height: 20px;
-      background-color: #00ffcc;
-      animation: blink 0.8s infinite;
-      vertical-align: middle;
-    }
-
-    @keyframes blink {
-      0%, 50%, 100% {
-        opacity: 1;
-      }
-      25%, 75% {
-        opacity: 0;
-      }
-    }
-
-    .card-container {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background: radial-gradient(ellipse at center, #111 0%, #000 100%);
-      position: relative;
-      animation: fadeIn 2s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    .card {
-      background: rgba(20, 20, 20, 0.95);
-      padding: 30px;
-      border: 2px solid #00ffff;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 350px;
-      width: 90%;
-      position: relative;
-      box-shadow: 0 0 30px #00ffff, inset 0 0 10px #00ffff;
-    }
-
-    .neon-border {
-      position: absolute;
-      top: -5px; left: -5px; right: -5px; bottom: -5px;
-      border: 2px solid #0ff;
-      border-radius: 25px;
-      box-shadow: 0 0 20px #0ff;
-      z-index: -1;
-    }
-
-    .fire-particles {
+    .background-gif {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://media.giphy.com/media/3o7qE2VAxuXWeyvJIY/giphy.gif') center center / cover no-repeat;
-      opacity: 0.05;
-      z-index: -2;
+      z-index: -1;
+      background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHd6MDdkMzl3MDRxZGZiNnJhNnJ3eXQ2bHZ3dnhmNG04enVoa3RxbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tQHtASL5mC8cKPyfSU/giphy.gif') center center / cover no-repeat;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+      color: #fff;
+      padding: 30px;
+      max-width: 350px;
+      width: 100%;
+      text-align: center;
+      z-index: 1;
     }
 
     .avatar {
       width: 100px;
+      height: 100px;
+      margin-bottom: 15px;
       border-radius: 50%;
-      margin-bottom: 10px;
+      border: 2px solid #00ff00;
     }
 
     .name {
-      font-size: 1.5em;
+      font-size: 1.6rem;
       font-weight: bold;
-      margin: 10px 0;
+      margin-bottom: 5px;
     }
 
-    .title {
-      color: #0ff;
-      font-size: 1em;
+    .profession {
+      font-size: 1rem;
       margin-bottom: 20px;
-    }
-
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
+      color: #80ff80;
     }
 
     .btn {
-      background-color: #00ffff;
-      color: #000;
-      border: none;
-      padding: 10px;
-      border-radius: 10px;
+      display: inline-block;
+      margin: 8px 5px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 1px solid #00ff00;
+      background: transparent;
+      color: #00ff00;
       text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
+      font-size: 0.9rem;
+      transition: 0.3s;
     }
 
     .btn:hover {
-      background-color: #0ff;
+      background: #00ff00;
+      color: black;
+    }
+
+    @media (max-width: 400px) {
+      .card {
+        padding: 20px;
+      }
+
+      .name {
+        font-size: 1.4rem;
+      }
+
+      .profession {
+        font-size: 0.9rem;
+      }
+    }
+
+    #terminal-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background: black;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 2rem;
+      white-space: pre-wrap;
+      font-size: 1rem;
+      line-height: 1.5;
+      overflow: hidden;
+    }
+
+    #boot-text::after {
+      content: "_";
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
-
 <body>
-  <div class="loader">
-    <div class="terminal" id="terminal"></div>
+  <div id="terminal-loader">
+    <pre id="boot-text"></pre>
   </div>
 
-  <div class="fire-particles"></div>
+  <div class="background-gif"></div>
 
-  <div class="card-container" id="cardContainer">
+  <div class="container">
     <div class="card">
-      <div class="neon-border"></div>
-      <img src="avatar.jpg" alt="Avatar" class="avatar">
-      <div class="name">Sergei Bondar</div>
-      <div class="title">Systems Engineer</div>
-      <div class="buttons">
-        <a href="https://wa.me/+51936276938" class="btn" target="_blank">WhatsApp</a>
-        <a href="https://t.me/sercuritys" class="btn" target="_blank">Telegram</a>
-        <a href="mailto:bondarin87@gmail.com" class="btn">Email</a>
-        <a href="SergeiBondar.vcf" class="btn" download>Add to Contacts (VCF)</a>
-        <a href="https://www.facebook.com/bondaritto" class="btn" target="_blank">Facebook</a>
-        <a href="https://www.instagram.com/serbondar" class="btn" target="_blank">Instagram</a>
-        <a href="https://x.com/bondaritto" class="btn" target="_blank">X (Twitter)</a>
-      </div>
+      <img src="avatar.jpg" alt="Avatar digital" class="avatar" />
+      <div class="name">Sergei Digital</div>
+      <div class="profession">Desarrollador | Ciberseguridad</div>
+      <a href="https://t.me/sergei_bot" class="btn" target="_blank">Telegram Bot</a>
+      <a href="mailto:sergei@email.com" class="btn">Email</a>
     </div>
   </div>
 
   <script>
-    const terminalLines = [
-      'Initializing secure interface...',
-      'Verifying biometric access...',
-      'Loading modules: contact.card, neon.interface, vcf.exporter...',
-      'Spawning holographic shell... ✅',
-      'Loading fire particles engine... ✅',
-      'Launching public node access... ✅',
-      'System ready. Welcome, User.\n',
+    const lines = [
+      "Booting Sergei Digital Interface...",
+      "Loading encrypted identity core...",
+      "Initializing contact systems...",
+      "Matrix layer online...",
+      "Deploying holographic interface...",
+      "Ready."
     ];
 
-    const terminal = document.getElementById('terminal');
+    const bootText = document.getElementById("boot-text");
+    const terminal = document.getElementById("terminal-loader");
 
     let line = 0;
+
     function typeLine() {
-      if (line < terminalLines.length) {
-        const span = document.createElement('span');
-        let text = terminalLines[line];
-        let i = 0;
-        const interval = setInterval(() => {
-          if (i < text.length) {
-            span.textContent += text[i];
-            i++;
-          } else {
-            clearInterval(interval);
-            line++;
-            typeLine();
-          }
-        }, 15);
-        terminal.appendChild(span);
+      if (line < lines.length) {
+        bootText.innerHTML += lines[line] + "\n";
+        line++;
+        setTimeout(typeLine, 600);
       } else {
-        const cursor = document.createElement('div');
-        cursor.classList.add('cursor');
-        terminal.appendChild(cursor);
         setTimeout(() => {
-          document.querySelector('.loader').style.display = 'none';
-          document.getElementById('cardContainer').style.display = 'flex';
+          terminal.style.transition = "opacity 0.5s ease";
+          terminal.style.opacity = 0;
+          setTimeout(() => {
+            terminal.remove(); // Limpia el DOM
+          }, 600);
         }, 800);
       }
     }
 
-    window.onload = typeLine;
+    window.addEventListener('load', () => {
+      typeLine();
+    });
   </script>
 </body>
-
 </html>
